@@ -215,5 +215,22 @@ def registrar_productos_view():
         resp.status_code = 400
         return resp
     
+@cross_origin
+@app.route("/listar_productos",methods=["GET"])
+def listar_productos():
+    #todo seleccionado todos los objetos de la clase grupos
+    productos=productos_view.query.all()
+    #todo serializando y seleccionado los atributos a cast en json
+    #todo dump nos permite serializar los objetos de PYTHON 
+    result=productosview_schema.dump(productos)
+    
+    #todo creando el documento de salida
+    data={
+        'message':'Todas mis productos',
+        'status':200,
+        'data':result
+    }
+    return make_response(jsonify(data))      
+    
     
   

@@ -231,6 +231,23 @@ def listar_productos():
         'data':result
     }
     return make_response(jsonify(data))      
+
+
+@cross_origin
+@app.route("/add_productos_view",methods=["POST"])
+def add_productos_views():
+    name=request.json['name']
+    photo_product=request.json['photo_product']
+    new_producto=productos_view(name=name,photo_product=photo_product)
+    db.session.add(new_producto)
+    db.session.commit()
+    result=productoview_schema.dump(new_producto)
+    data ={
+            'message':'Se Registro el producto con exito',
+            'status':200,
+            'data':result
+        }
+    return make_response(jsonify(data))
     
     
   
